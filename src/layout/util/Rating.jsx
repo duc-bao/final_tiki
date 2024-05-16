@@ -1,13 +1,6 @@
 import { Rating } from "@mui/material";
 
 const Star = (props) => {
-    return (
-        <Rating
-            name="half-rating"
-            value={props.value}
-            precision={0.5}
-            size="small"
-        />
-    );
+    return <Rating name="read-only" value={props.value} size="small" readOnly />;
 };
 export default Star;

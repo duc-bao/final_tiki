@@ -1,17 +1,18 @@
+import { NavLink } from "react-router-dom";
 import Star from "../../../util/Rating";
 import "./SideBar.css";
 
 const SideBar = () => {
     return (
         <>
-            <div className="col-lg-2 d-none d-sm-block ">
+            <div className="col-lg-2 d-none d-lg-block ">
                 <div>
                     <span>
-                        <a href="">Trang Chủ</a>
+                        <NavLink to="/">Trang Chủ</NavLink>
                     </span>
                     &#62;
                     <span>
-                        <a href="">Nhà Sách Tiki</a>
+                        <NavLink to="/">Nhà Sách Tiki</NavLink>
                     </span>
                 </div>
                 <div className="bg-white text-start mt-2 p-3">
@@ -124,11 +125,6 @@ const SideBar = () => {
                             <button className="">
                                 Giá{" "}
                                 <i className="fa-solid fa-arrow-up-long"></i>
-                            </button>
-                        )}
-                        {true && (
-                            <button className="">
-                                Giá{" "}
                                 <i className="fa-solid fa-arrow-down-long"></i>
                             </button>
                         )}

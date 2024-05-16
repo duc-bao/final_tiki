@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 const Footer = () => {
     return (
@@ -10,12 +11,12 @@ const Footer = () => {
                                 Hỗ trợ khách hàng
                             </h4>
                             <ul className="nav flex-column text-start">
-                                <li className="nav-item ">
+                                <Link to ="/" className="nav-item ">
                                     Hotline: 1900-6035
-                                </li>
-                                <li className="nav-item mb-1">
+                                </Link>
+                                <Link to = "/" className="nav-item mb-1">
                                     (1000 đ/phút, 8-21h kể cả T7, CN)
-                                </li>
+                                </Link>
                                 <li className="nav-item mb-1">
                                     Các câu hỏi thường gặp
                                 </li>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 const NavBar = () => {
@@ -7,7 +8,10 @@ const NavBar = () => {
                 <div className="container ">
                     <div className="row header-content  gx-5 d-flex align-items-center justify-content-between">
                         <div className="col-lg-1 text-start logo">
+                            <Link to={"/"}>
                             <img src="./images/logo.jpg" alt="" />
+                            </Link>
+                            
                         </div>
                         <div className="col-lg-8">
                             <form

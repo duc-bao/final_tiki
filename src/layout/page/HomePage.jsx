@@ -1,3 +1,4 @@
+import BookList from "../product/BookList";
 import SideBar from "./componets/sideBar/SideBar";
 
 const HomePage = () => {
@@ -5,6 +6,7 @@ const HomePage = () => {
         <div className="container">
             <div className="row">
                 <SideBar></SideBar>
+                <BookList></BookList>
             </div>
         </div>
     );
