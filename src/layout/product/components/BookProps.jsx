@@ -4,7 +4,7 @@ import TextElip from "../../util/TextElip";
 import "./BookProps.css";
 const BookProps = (props) => {
     return (
-        <div className="col-6 col-sm-6 col-md-4 col-lg-3">
+        <div className="col-6 col-sm-6 col-md-6 col-lg-3">
             <div className="bg-white">
                 <Link
                     to={`/book/${props.book.id}`}

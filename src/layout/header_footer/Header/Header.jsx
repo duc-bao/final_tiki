@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
+import { useContext } from "react";
+import { CartContext } from "../../util/CartItemContext";
 
-const NavBar = () => {
+const Header = () => {
+    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
+
     return (
         <>
             <div className="header-lg d-none d-lg-block container-fluid">
@@ -43,10 +47,10 @@ const NavBar = () => {
                                 <img src="./images/header_img/hb2.png" alt="" />
                                 Tài khoản
                             </a>
-                            <a href="" className="cart_btn">
+                            <Link to = "/cart" className="cart_btn">
                                 <img src="./images/cart.png" alt="" />
-                                <span>2</span>
-                            </a>
+                                <span>{getCartTotal()}</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -80,7 +84,7 @@ const NavBar = () => {
                     <a href="/cart">
                         <button className="mobile-cart-btn">
                             <i className="fa-solid fa-xl fa-cart-shopping"></i>
-                            <span>2</span>
+                            <span>{getCartTotal()}  </span>
                         </button>
                     </a>
                 </div>
@@ -88,4 +92,4 @@ const NavBar = () => {
         </>
     );
 };
-export default NavBar;
+export default Header;

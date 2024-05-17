@@ -1,6 +1,7 @@
 import { Add, Remove } from "@mui/icons-material";
-import { Button, Icon } from "@mui/material";
-import { useState } from "react";
+import { Button } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../../../util/CartItemContext";
 
 const DetailPrice = (props) => {
     const [quantity, setQuantity] = useState(1);
@@ -10,9 +11,11 @@ const DetailPrice = (props) => {
     const add = () => {
         setQuantity(quantity + 1);
     };
+    const { cartItems, addToCart } = useContext(CartContext);
+
     return (
         <div>
-            <p>
+            <p> 
                 <strong>Số lượng</strong>
             </p>
             <div className="wrapper-select-quantity d-flex align-items-center rounded">
@@ -44,21 +47,54 @@ const DetailPrice = (props) => {
                 </strong>
             </div>
             <div className="d-grid gap-2 mt-2">
-                <Button variant="outlined" size="large" sx = {{ borderColor: 'red', backgroundColor: 'red',color:"white",
-                    '&:hover': {
-                        backgroundColor: 'blue',
-                        color: 'white',
-                    },}}>Mua hàng</Button>
-                <Button variant="outlined" size="large" sx = {{ borderColor: 'blue', backgroundColor: 'white',color:"blue",
-                    '&:hover': {
-                        backgroundColor: 'black',
-                        color: 'white',
-                    },}}>Thêm vào giỏ hàng</Button>
-                <Button variant="outlined" size="large" sx = {{ borderColor: 'blue', backgroundColor: 'white',color:"blue",
-                    '&:hover': {
-                        backgroundColor: 'black',
-                        color: 'white',
-                    },}}>Mua trước trả sau</Button>
+                <Button
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                        borderColor: "red",
+                        backgroundColor: "red",
+                        color: "white",
+                        "&:hover": {
+                            backgroundColor: "blue",
+                            color: "white",
+                        },
+                    }}
+                >
+                    Mua hàng
+                </Button>
+                <Button
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                        borderColor: "blue",
+                        backgroundColor: "white",
+                        color: "blue",
+                        "&:hover": {
+                            backgroundColor: "black",
+                            color: "white",
+                        },
+                    }}
+                    onClick={() => addToCart(props.book)
+
+                    }
+                >
+                    Thêm vào giỏ hàng
+                </Button>
+                <Button
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                        borderColor: "blue",
+                        backgroundColor: "white",
+                        color: "blue",
+                        "&:hover": {
+                            backgroundColor: "black",
+                            color: "white",
+                        },
+                    }}
+                >
+                    Mua trước trả sau
+                </Button>
             </div>
         </div>
     );

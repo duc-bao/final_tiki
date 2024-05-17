@@ -9,7 +9,6 @@ const SideBarBook = (props) => {
             return image.base_url || image.large_url;
         });
     }
-    console.log(imageList);
     // Xử lí phần hình ảnh
     const [currentImage, setCurrentImage] = useState(0);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
