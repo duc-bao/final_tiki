@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../util/CartItemContext";
 
 const Header = () => {
-    const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
-
+    const {  getCartTotal } = useContext(CartContext)
+    const [input , setInput] = useState("");
+    const handleInputChange = (event) => {
+        setInput(event.target.value);
+    }
     return (
         <>
             <div className="header-lg d-none d-lg-block container-fluid">
@@ -27,8 +30,8 @@ const Header = () => {
                                     type="text"
                                     name="name"
                                     placeholder="Freeship đến 30k"
-                                    // value={inputValue}
-                                    // onChange={handleInputChange}
+                                    value={input}
+                                    onChange={handleInputChange}
                                 />
                                 <button
                                     type="submit"

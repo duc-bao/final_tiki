@@ -23,7 +23,7 @@ const BookProps = (props) => {
                         />
                     }
                 </Link>
-                <div className=" " style={{height:"100px"}}>
+                <div className=" " style={{ height: "100px" }}>
                     <Link to={`/book/${props.book.id}`}>
                         <span>
                             <TextElip
@@ -47,9 +47,27 @@ const BookProps = (props) => {
                         )}
                     </div>
                 </div>
-                <strong style={{ fontSize: "16px" }}>
-                    {props.book.list_price.toLocaleString()}đ
-                </strong>
+                <div className="d-flex align-items-center">
+                    <span className="discounted-price">
+                        <strong style={{ fontSize: "22px" }}>
+                            {props.book.list_price?.toLocaleString()}đ
+                        </strong>
+                    </span>
+                    {props.book.list_price >
+                        props.book.current_seller.price && (
+                        <span className="original-price ms-3 small fw-bolder">
+                            <del className="" style={{ fontSize: "12px" }}>
+                                {Math.round(
+                                    ((props.book.list_price -
+                                        props.book.current_seller.price) /
+                                        props.book.list_price) *
+                                        100
+                                )}
+                                %
+                            </del>
+                        </span>
+                    )}
+                </div>
                 <div className="delivery d-flex align-items-center justify-content-center justify-content-lg-start">
                     <img
                         className=" d-none d-lg-block mx-2"

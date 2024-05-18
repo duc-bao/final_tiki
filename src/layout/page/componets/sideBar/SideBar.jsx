@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Star from "../../../util/Rating";
 import "./SideBar.css";
 
@@ -20,10 +20,10 @@ const SideBar = () => {
                         <strong className="font-semibold text-lg">
                             Danh Mục Sản Phẩm
                         </strong>
-                        <a style={{ display: "block" }}>English Books</a>
-                        <a style={{ display: "block" }}>Sách tiếng Việt</a>
-                        <a style={{ display: "block" }}>Văn phòng phẩm</a>
-                        <a style={{ display: "block" }}>Quà lưu niệm</a>
+                        <Link to = "/search?name=English+Books" style={{ display: "block", color: "#38383D" }}>English Books</Link>
+                        <Link to = "/search?name=Sách+tiếng+việt" style={{ display: "block", color: "#38383D" }}>Sách tiếng Việt</Link>
+                        <Link to = "/search?name=Tác+phẩm+kinh+điển" style={{ display: "block", color: "#38383D" }}>Tác phẩm kinh điển</Link>
+                        <Link to = "/search?name=Sách+kỹ+năng+làm+việc" style={{ display: "block", color: "#38383D" }}>Sách kỹ năng làm việc</Link>
                     </div>
                     <div className="sideBar_center mt-2 ">
                         <strong className="font-semibold text-lg">
@@ -45,7 +45,7 @@ const SideBar = () => {
                                 id="check_ncc"
                                 className="me-2"
                             />
-                            <label htmlFor="check_ncc">Bamboo Books</label>
+                            <label htmlFor="check_ncc">Tiki Trading</label>
                         </div>
                         <div>
                             <input
@@ -54,7 +54,7 @@ const SideBar = () => {
                                 id="check_ncc"
                                 className="me-2"
                             />
-                            <label htmlFor="check_ncc">Times Books</label>
+                            <label htmlFor="check_ncc">AHABOOKS</label>
                         </div>
                         <div>
                             <input
