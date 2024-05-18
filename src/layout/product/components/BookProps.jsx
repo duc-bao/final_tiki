@@ -12,7 +12,7 @@ const BookProps = (props) => {
                 >
                     {
                         <img
-                            src={props.book.images[0].base_url}
+                            src={props.book.images[0].large_url}
                             alt=""
                             className="object-cover object-fit "
                             style={{
@@ -23,7 +23,7 @@ const BookProps = (props) => {
                         />
                     }
                 </Link>
-                <div className=" " style={{ height: "100px" }}>
+                <div className="mt-2  " style={{ height: "100px" }}>
                     <Link to={`/book/${props.book.id}`}>
                         <span>
                             <TextElip
@@ -40,6 +40,7 @@ const BookProps = (props) => {
                                 style={{
                                     borderLeft: "1px solid #ccc",
                                     paddingLeft: "8px",
+                                    fontSize: "10px",color: "#808089"
                                 }}
                             >
                                 {props.book.quantity_sold.text}
@@ -50,7 +51,7 @@ const BookProps = (props) => {
                 <div className="d-flex align-items-center">
                     <span className="discounted-price">
                         <strong style={{ fontSize: "22px" }}>
-                            {props.book.list_price?.toLocaleString()}đ
+                            {props.book.list_price?.toLocaleString()}₫
                         </strong>
                     </span>
                     {props.book.list_price >

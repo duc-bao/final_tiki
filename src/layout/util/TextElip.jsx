@@ -10,6 +10,8 @@ const TextElip = (props) => {
                 overflowWrap: "break-word",
                 whiteSpace: "pre-wrap",
                 lineHeight: "18px",
+                color: "black",
+                fontWeight: "400"
             }}
         >
             {truncatedText}

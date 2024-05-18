@@ -20,66 +20,103 @@ const SideBar = () => {
                         <strong className="font-semibold text-lg">
                             Danh Mục Sản Phẩm
                         </strong>
-                        <Link to = "/search?name=English+Books" style={{ display: "block", color: "#38383D" }}>English Books</Link>
-                        <Link to = "/search?name=Sách+tiếng+việt" style={{ display: "block", color: "#38383D" }}>Sách tiếng Việt</Link>
-                        <Link to = "/search?name=Tác+phẩm+kinh+điển" style={{ display: "block", color: "#38383D" }}>Tác phẩm kinh điển</Link>
-                        <Link to = "/search?name=Sách+kỹ+năng+làm+việc" style={{ display: "block", color: "#38383D" }}>Sách kỹ năng làm việc</Link>
+                        <Link
+                            to="/search?name=English+Books"
+                            style={{ display: "block", color: "#38383D" }}
+                        >
+                            English Books
+                        </Link>
+                        <Link
+                            to="/search?name=Sách+tiếng+việt"
+                            style={{ display: "block", color: "#38383D" }}
+                        >
+                            Sách tiếng Việt
+                        </Link>
+                        <Link
+                            to="/search?name=Tác+phẩm+kinh+điển"
+                            style={{ display: "block", color: "#38383D" }}
+                        >
+                            Tác phẩm kinh điển
+                        </Link>
+                        <Link
+                            to="/search?name=Sách+kỹ+năng+làm+việc"
+                            style={{ display: "block", color: "#38383D" }}
+                        >
+                            Sách kỹ năng làm việc
+                        </Link>
                     </div>
                     <div className="sideBar_center mt-2 ">
                         <strong className="font-semibold text-lg">
                             Nhà cung cấp
                         </strong>
                         <div>
-                            <input
-                                type="checkbox"
-                                name="name"
-                                id="check_ncc"
-                                className="me-2"
-                            />
-                            <label htmlFor="check_ncc">Nhà sách Fahasa</label>
+                            <Link to={`/filter/name/fahasa`}>
+                                <input
+                                    type="checkbox"
+                                    name="name"
+                                    value="Nhà sách Fahasa"
+                                    id="fahasa"
+                                    className="me-2"
+                                />
+                            </Link>
+                            <label htmlFor="fahasa">Nhà sách Fahasa</label>
                         </div>
                         <div>
-                            <input
-                                type="checkbox"
-                                name="name"
-                                id="check_ncc"
-                                className="me-2"
-                            />
-                            <label htmlFor="check_ncc">Tiki Trading</label>
+                            <Link to="/filter">
+                                <input
+                                    type="checkbox"
+                                    name="name"
+                                    value="Tiki Trading"
+                                    id="Tiki_Trading"
+                                    className="me-2"
+                                />
+                                <label htmlFor="Tiki_Trading">
+                                    Tiki Trading
+                                </label>
+                            </Link>
                         </div>
                         <div>
-                            <input
-                                type="checkbox"
-                                name="name"
-                                id="check_ncc"
-                                className="me-2"
-                            />
-                            <label htmlFor="check_ncc">AHABOOKS</label>
+                            <Link to="/filter">
+                                <input
+                                    type="checkbox"
+                                    name="name"
+                                    value="AHABOOKS"
+                                    id="AHABOOKS"
+                                    className="me-2"
+                                />
+                                <label htmlFor="AHABOOKS">AHABOOKS</label>
+                            </Link>
                         </div>
                         <div>
-                            <input
-                                type="checkbox"
-                                name="name"
-                                id="check_ncc"
-                                className="me-2"
-                            />
-                            <label htmlFor="check_ncc">
-                                Nhà Sách Trẻ Online
-                            </label>
+                            <Link to="/filter">
+                                <input
+                                    type="checkbox"
+                                    name="name"
+                                    id="online"
+                                    value="Nhà Sách Trẻ Online"
+                                    className="me-2"
+                                />
+                                <label htmlFor="online">
+                                    Nhà Sách Trẻ Online
+                                </label>
+                            </Link>
                         </div>
                         <div>
-                            <input
-                                type="checkbox"
-                                name="name"
-                                id="check_ncc"
-                                className="me-2"
-                            />
-                            <label htmlFor="check_ncc">VBooks</label>
+                            <Link to="/filter">
+                                <input
+                                    type="checkbox"
+                                    name="name"
+                                    value="VBooks"
+                                    id="VBooks"
+                                    className="me-2"
+                                />
+                                <label htmlFor="VBooks">VBooks</label>
+                            </Link>
                         </div>
                         <div>
-                            <a href="" className="text-primary">
+                            <Link to="/" className="text-primary">
                                 Xem thêm
-                            </a>
+                            </Link>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="13"

@@ -18,6 +18,7 @@ const SearchPage = () => {
     }, []);
     useEffect(() => {
         const url = new URLSearchParams(window.location.search);
+        console.log(url);
         const key = url.get("name");    
         if (key) {
             const keysearch = key.toLowerCase();

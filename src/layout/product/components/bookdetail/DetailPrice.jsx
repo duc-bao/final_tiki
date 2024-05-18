@@ -12,10 +12,16 @@ const DetailPrice = (props) => {
         setQuantity(quantity + 1);
     };
     const { cartItems, addToCart } = useContext(CartContext);
-
+    // Mua hàng
+    const [isCheckout, setIsCheckout] = useState(false);
+    const handleBuyNow = (book) => {
+        setIsCheckout(true);
+        const totalPrice = book.list_price * quantity;
+        props.handleBuyNow(true, book, totalPrice, quantity);
+    };
     return (
         <div>
-            <p> 
+            <p>
                 <strong>Số lượng</strong>
             </p>
             <div className="wrapper-select-quantity d-flex align-items-center rounded">
@@ -59,6 +65,7 @@ const DetailPrice = (props) => {
                             color: "white",
                         },
                     }}
+                    onClick={() => handleBuyNow(props.book)}
                 >
                     Mua hàng
                 </Button>
@@ -74,9 +81,7 @@ const DetailPrice = (props) => {
                             color: "white",
                         },
                     }}
-                    onClick={() => addToCart(props.book)
-
-                    }
+                    onClick={() => addToCart(props.book)}
                 >
                     Thêm vào giỏ hàng
                 </Button>
