@@ -11,13 +11,45 @@ import CartItem from "./componets/CartItem";
 import CheckoutItem from "./componets/CheckoutItem";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../util/CartItemContext";
-
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 const CheckoutPage = (props) => {
-    const {clearCart} = useContext(CartContext);
+    const { clearCart } = useContext(CartContext);
     const [fullName, setFullName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [deliveryAddress, setDeliveryAddress] = useState("");
     const [note, setNote] = useState("");
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+    const [currency, setCurrency] = useState(options.currency);
+
+    const onCurrencyChange = ({ target: { value } }) => {
+        setCurrency(value);
+        dispatch({
+            type: "resetOptions",
+            value: {
+                ...options,
+                currency: value,
+            },
+        });
+    };
+    const onCreateOrder = (data, actions) => {
+        return actions.order.create({
+            purchase_units: [
+                {
+                    amount: {
+                        value: totalOrder().toFixed(2),
+                    },
+                },
+            ],
+        });
+    };
+    const onApproveOrder = (data, actions) => {
+        return actions.order.capture().then((details) => {
+            const name = details.payer.name.given_name;
+            alert(`Transaction completed by ${name}`);
+            navigate("/checkout-success");
+        });
+    };
     const totalOrder = () => {
         let totalPrice = 0;
         props.bookBuy.forEach((item) => {
@@ -28,6 +60,7 @@ const CheckoutPage = (props) => {
         });
         return totalPrice;
     };
+
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user")) || {};
         if (userData) {
@@ -52,9 +85,7 @@ const CheckoutPage = (props) => {
         const isConfirmed = window.confirm("Bạn đã chắc chắn đặt hàng?");
         if (isConfirmed) {
             navigate("/checkout-success");
-            clearCart();
         }
-
     };
     return (
         <div className="container bg-light my-3">
@@ -169,6 +200,15 @@ const CheckoutPage = (props) => {
                             }
                         />
                     </RadioGroup>
+                    <PayPalButtons
+                        style={{ layout: "vertical" }}
+                        createOrder={(data, actions) =>
+                            onCreateOrder(data, actions)
+                        }
+                        onApprove={(data, actions) =>
+                            onApproveOrder(data, actions)
+                        }
+                    />
                 </FormControl>
             </div>
             <div className="text-center mt-5">
