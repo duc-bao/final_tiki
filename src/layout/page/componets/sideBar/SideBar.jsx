@@ -1,8 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
 import Star from "../../../util/Rating";
 import "./SideBar.css";
+import { useState } from "react";
 
-const SideBar = () => {
+const SideBar = (props) => {
+    const handleChecked = (e) => {
+        props.handleChecked(true, e.target.value);
+    };
+    const handleClickStar = (e) => {
+        props.handleClickStar(e);
+    };
     return (
         <>
             <div className="col-lg-2 d-none d-lg-block ">
@@ -50,68 +57,70 @@ const SideBar = () => {
                             Nhà cung cấp
                         </strong>
                         <div>
-                            <Link to={`/filter/name/fahasa`}>
-                                <input
-                                    type="checkbox"
-                                    name="name"
-                                    value="Nhà sách Fahasa"
-                                    id="fahasa"
-                                    className="me-2"
-                                />
-                            </Link>
+                            <input
+                                onClick={(e) => {
+                                    handleChecked(e);
+                                }}
+                                type="checkbox"
+                                name="name"
+                                value="Nhà sách Fahasa"
+                                id="fahasa"
+                                className="me-2"
+                            />
+
                             <label htmlFor="fahasa">Nhà sách Fahasa</label>
                         </div>
                         <div>
-                            <Link to="/filter">
-                                <input
-                                    type="checkbox"
-                                    name="name"
-                                    value="Tiki Trading"
-                                    id="Tiki_Trading"
-                                    className="me-2"
-                                />
-                                <label htmlFor="Tiki_Trading">
-                                    Tiki Trading
-                                </label>
-                            </Link>
+                            <input
+                                onClick={(e) => {
+                                    handleChecked(e);
+                                }}
+                                type="checkbox"
+                                name="name"
+                                value="Tiki Trading"
+                                id="Tiki_Trading"
+                                className="me-2"
+                            />
+                            <label htmlFor="Tiki_Trading">Tiki Trading</label>
                         </div>
                         <div>
-                            <Link to="/filter">
-                                <input
-                                    type="checkbox"
-                                    name="name"
-                                    value="AHABOOKS"
-                                    id="AHABOOKS"
-                                    className="me-2"
-                                />
-                                <label htmlFor="AHABOOKS">AHABOOKS</label>
-                            </Link>
+                            <input
+                                onClick={(e) => {
+                                    handleChecked(e);
+                                }}
+                                type="checkbox"
+                                name="name"
+                                value="AHABOOKS"
+                                id="AHABOOKS"
+                                className="me-2"
+                            />
+                            <label htmlFor="AHABOOKS">AHABOOKS</label>
                         </div>
                         <div>
-                            <Link to="/filter">
-                                <input
-                                    type="checkbox"
-                                    name="name"
-                                    id="online"
-                                    value="Nhà Sách Trẻ Online"
-                                    className="me-2"
-                                />
-                                <label htmlFor="online">
-                                    Nhà Sách Trẻ Online
-                                </label>
-                            </Link>
+                            <input
+                                onClick={(e) => {
+                                    handleChecked(e);
+                                }}
+                                type="checkbox"
+                                name="name"
+                                id="online"
+                                value="Bamboo Books"
+                                className="me-2"
+                            />
+                            <label htmlFor="online">Bamboo Books</label>
                         </div>
                         <div>
-                            <Link to="/filter">
-                                <input
-                                    type="checkbox"
-                                    name="name"
-                                    value="VBooks"
-                                    id="VBooks"
-                                    className="me-2"
-                                />
-                                <label htmlFor="VBooks">VBooks</label>
-                            </Link>
+                            <input
+                                onClick={(e) => {
+                                    handleChecked(e);
+                                }}
+                                type="checkbox"
+                                name="name"
+                                value="Minh Long Book"
+                                id="VBooks"
+                                className="me-2"
+                            />
+                            <label htmlFor="VBooks">Minh Long Book</label>
                         </div>
                         <div>
                             <Link to="/" className="text-primary">
@@ -134,15 +143,30 @@ const SideBar = () => {
                     <div className="mt-1 feedback-filter ">
                         <strong>Đánh giá</strong>
                         <ul className="mt-3">
-                            <li className="d-flex align-items-center mb-2">
+                            <li
+                                className="d-flex align-items-center mb-2"
+                                onClick={() => {
+                                    handleClickStar(5);
+                                }}
+                            >
                                 <Star value={5} />
                                 <span>từ 5 sao</span>
                             </li>
-                            <li className="d-flex align-items-center">
+                            <li
+                                className="d-flex align-items-center"
+                                onClick={() => {
+                                    handleClickStar(4);
+                                }}
+                            >
                                 <Star value={4} />
                                 <span>từ 4 sao</span>
                             </li>
-                            <li className="d-flex align-items-center">
+                            <li
+                                className="d-flex align-items-center"
+                                onClick={() => {
+                                    handleClickStar(3);
+                                }}
+                            >
                                 <Star value={3} />
                                 <span>từ 3 sao</span>
                             </li>

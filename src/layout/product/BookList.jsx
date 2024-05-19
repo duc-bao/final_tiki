@@ -21,7 +21,7 @@ const BookList = () => {
         return <div>Error loading books: {error.message}</div>;
     }
     return (
-        <div className="col-lg-10 col-sm-12 col-md-6  " style={{marginTop:"30px"}}>
+        <div className="col-lg-10 col-sm-12 col-md-12  " style={{marginTop:"30px"}}>
             <div className="row g-4">
                 { bookList.map((book) => {
                     return <BookProps key={book.id} book={book}></BookProps>;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function getData() {
     try {
-        const response = await axios.get("http://localhost:3000/books   ");
+        const response = await axios.get("http://localhost:3000/books");
         const allBooks = response.data;
         const limitedBooks = allBooks.slice(0, 24);
         return limitedBooks;

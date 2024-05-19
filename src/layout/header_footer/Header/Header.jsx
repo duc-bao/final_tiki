@@ -15,7 +15,7 @@ const Header = () => {
                 <div className="container ">
                     <div className="row header-content  gx-5 d-flex align-items-center justify-content-between">
                         <div className="col-lg-1 text-start logo">
-                            <Link to={"/"}>
+                            <Link to=  "/">
                             <img src="./images/logo.jpg" alt="" />
                             </Link>
                             
@@ -63,14 +63,14 @@ const Header = () => {
                 className="container-fluid d-block bg-primary d-lg-none"
             >
                 <div className="container p-0 d-flex justify-content-between align-items-center">
-                    <a href="/">
+                    <Link to ="/">
                         <button>
                             <i className="fa-solid fa-xl fa-chevron-left"></i>
                         </button>
-                    </a>
-                    <button>
+                    </Link>
+                    <Link to = '/'>
                         <i className="fa-solid fa-xl fa-bars"></i>
-                    </button>
+                    </Link>
                     <form
                         action="/search"
                         className="mobile-search d-flex align-items-center justify-content-between"
@@ -84,12 +84,12 @@ const Header = () => {
                             placeholder="Bạn đang tìm kiếm gì"
                         />
                     </form>
-                    <a href="/cart">
+                    <Link  to="/cart">
                         <button className="mobile-cart-btn">
                             <i className="fa-solid fa-xl fa-cart-shopping"></i>
                             <span>{getCartTotal()}  </span>
                         </button>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </>

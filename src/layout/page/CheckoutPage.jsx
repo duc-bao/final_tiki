@@ -6,13 +6,14 @@ import {
     RadioGroup,
     TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartItem from "./componets/CartItem";
 import CheckoutItem from "./componets/CheckoutItem";
 import { useNavigate } from "react-router-dom";
-
+import { CartContext } from "../util/CartItemContext";
 
 const CheckoutPage = (props) => {
+    const {clearCart} = useContext(CartContext);
     const [fullName, setFullName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -27,13 +28,33 @@ const CheckoutPage = (props) => {
         });
         return totalPrice;
     };
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem("user")) || {};
+        if (userData) {
+            setFullName(userData.fullName || "duc bao");
+            setPhoneNumber(userData.phoneNumber || "0365598888");
+            setDeliveryAddress(userData.deliveryAddress || "Hoàng mai");
+            setNote(userData.note || "giao hàng nhanh   ");
+        }
+    }, []);
 
+    useEffect(() => {
+        const userData = {
+            fullName,
+            phoneNumber,
+            deliveryAddress,
+            note,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+    }, [fullName, phoneNumber, deliveryAddress, note]);
     const navigate = useNavigate();
     const handleConfirmOrder = () => {
         const isConfirmed = window.confirm("Bạn đã chắc chắn đặt hàng?");
         if (isConfirmed) {
             navigate("/checkout-success");
+            clearCart();
         }
+
     };
     return (
         <div className="container bg-light my-3">
