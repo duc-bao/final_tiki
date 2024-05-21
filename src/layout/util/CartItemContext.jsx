@@ -1,12 +1,22 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(
-        localStorage.getItem("cartItems")
-            ? JSON.parse(localStorage.getItem("cartItems"))
-            : []
-    );
-    const addToCart = (item) => {
+    const [cartItems, setCartItems] = useState([]);
+    useEffect(() => {
+        const fetchDataCart = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/cart");
+                if (response.data) {
+                    setCartItems(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchDataCart();
+    }, []);
+    const addToCart = async (item) => {
         const isItemInCart = cartItems.find(
             (cartItem) => cartItem.id === item.id
         );
@@ -18,11 +28,26 @@ export const CartProvider = ({ children }) => {
                         : cartItem
                 )
             );
+            try {
+                await axios.put(`http://localhost:3000/cart/${item.id}`, {
+                    ...isItemInCart,
+                    quantity: isItemInCart.quantity + 1,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         } else {
-            setCartItems([...cartItems, { ...item, quantity: 1 }]);
+            const newCart = { ...item, quantity: 1 };
+
+            setCartItems([...cartItems, newCart]);
+            try {
+                await axios.post(`http://localhost:3000/cart`, newCart);
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
-    const removeFromCart = (item) => {
+    const removeFromCart = async (item) => {
         const isItemInCart = cartItems.find(
             (cartItem) => cartItem.id === item.id
         );
@@ -31,6 +56,11 @@ export const CartProvider = ({ children }) => {
             setCartItems(
                 cartItems.filter((cartItem) => cartItem.id !== item.id)
             );
+            try {
+                await axios.delete(`http://localhost:3000/cart/${item.id}`);
+            } catch (error) {
+                console.log(error);
+            }
         } else {
             setCartItems(
                 cartItems.map((cartItem) =>
@@ -39,30 +69,64 @@ export const CartProvider = ({ children }) => {
                         : cartItem
                 )
             );
+            try {
+                await axios.delete(`http://localhost:3000/cart/${item.id}`, {
+                    ...isItemInCart,
+                    quantity: isItemInCart.quantity - 1,
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
-    const incrementQuantity = (id) => {
-        setCartItems(
-            cartItems.map((cartItem) =>
-                cartItem.id === id
-                    ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                    : cartItem
-            )
-        );
-    };
-
-    const decrementQuantity = (id) => {
-        const isItemInCart = cartItems.find((cartItem) => cartItem.id === id);
-        if (isItemInCart && isItemInCart.quantity === 1) {
-            setCartItems(cartItems.filter((cartItem) => cartItem.id !== id));
-        } else {
+    const incrementQuantity = async (id) => {
+        const cartItem = cartItems.find((item) => item.id === id);
+        if (cartItem) {
             setCartItems(
                 cartItems.map((cartItem) =>
                     cartItem.id === id
-                        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                        ? { ...cartItem, quantity: cartItem.quantity + 1 }
                         : cartItem
                 )
             );
+            try {
+                await axios.put(`http://localhost:3000/cart/${id}`, {
+                    ...cartItem,
+                    quantity: cartItem.quantity + 1,
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+    const decrementQuantity = async (id) => {
+        const cartItem = cartItems.find((item) => item.id === id);
+        if (cartItem) {
+            if (cartItem.quantity === 1) {
+                setCartItems(cartItems.filter((item) => item.id !== id));
+                try {
+                    await axios.delete(`http://localhost:3000/cart/${id}`);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                setCartItems(
+                    cartItems.map((cartItem) =>
+                        cartItem.id === id
+                            ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                            : cartItem
+                    )
+                );
+                try {
+                    await axios.put(`http://localhost:3000/cart/${id}`, {
+                        ...cartItem,
+                        quantity: cartItem.quantity - 1,
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
         }
     };
     const getQuantity = (id) => {
@@ -73,8 +137,17 @@ export const CartProvider = ({ children }) => {
         const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
         return total;
     };
-    const clearCart = () => {
+    const clearCart = async () => {
         setCartItems([]);
+        try {
+            await Promise.all(
+                cartItems.map((item) => {
+                    axios.delete(`http://localhost:3000/cart/${item.id}`);
+                })
+            );
+        } catch (error) {
+            console.log(error);
+        }
     };
     const getTotalPrice = () => {
         const totalPrice = cartItems.reduce(

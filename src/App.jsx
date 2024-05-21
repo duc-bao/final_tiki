@@ -4,18 +4,18 @@ import Header from "./layout/header_footer/Header/Header";
 import Footer from "./layout/header_footer/footer/Footer";
 import CartPage from "./layout/page/CartPage";
 
-import FilterCheckBox from "./layout/page/FilterCheckBox";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import CheckoutPage from "./layout/page/CheckoutPage";
 import HomePage from "./layout/page/HomePage";
 import SearchPage from "./layout/page/SearchPage";
-import BookDetail from "./layout/product/BookDetail";
 import CheckoutSucces from "./layout/page/componets/CheckoutSucces";
-import BookList from "./layout/product/BookList";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import BookDetail from "./layout/product/BookDetail";
+import OrderPage from "./layout/page/OrderPage";
 function App() {
     const initialOptions = {
         "client-id":
             "Ac7z_dtT_6cf7HqV8O7HamRqigbrcFJIyE9QCm0bS8s3AU4mlLV_HkZWLvc_L2JXwNt-aDWY5IXmiIjs",
-        currency: "USD",
+        currency: "VNĐ",
         intent: "capture",
     };
     return (
@@ -38,6 +38,8 @@ function App() {
                         path="/checkout-success"
                         element={<CheckoutSucces></CheckoutSucces>}
                     ></Route>
+                    <Route path="/checkout" element={<CheckoutPage></CheckoutPage>}></Route>
+                    <Route path="/order" element= {<OrderPage></OrderPage>}></Route>
                 </Routes>
                 <Footer></Footer>
             </PayPalScriptProvider>

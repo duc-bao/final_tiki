@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartItem from "./componets/CartItem";
 import { useContext, useState } from "react";
 import { CartContext } from "../util/CartItemContext";
@@ -9,9 +9,11 @@ const CartPage = () => {
     const { cartItems, getTotalPrice, getQuantity } = useContext(CartContext);
     const [isCheckout, setIsCheckout] = useState(false);
     const [quantity, setQuantity] = useState(0);
+    const navigate = useNavigate();
     const handleBuyNow = () => {
-        setIsCheckout(true);
-        setQuantity(getQuantity())
+        const totalPriceProduct = getTotalPrice();
+        const quantity = getQuantity();
+        navigate("/checkout");
     };
     return (
         <div>

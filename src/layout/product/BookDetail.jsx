@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { getBookId } from "../api/bookAPI";
 import ContentDetail from "./components/bookdetail/ContentDetail";
 import SideBarBook from "./components/bookdetail/SideBarBook";
@@ -9,6 +9,8 @@ import CheckoutPage from "../page/CheckoutPage";
 const BookDetail = (props) => {
     const [book, setBook] = useState(null);
     const { id } = useParams();
+    const navigate = useNavigate();
+    const [quantityDetail, setQuantityDetail] = useState(0);
     let idBookNumber;
     //ep kieu number
     try {
@@ -19,6 +21,9 @@ const BookDetail = (props) => {
     } catch (error) {
         console.error(error);
     }
+    const handleGetQuantity = (quantity) =>{
+        setQuantityDetail(quantity);
+    } 
     useEffect(() => {
         getBookId(id)
             .then((response) => {
@@ -35,11 +40,15 @@ const BookDetail = (props) => {
     const [totalPriceProduct, setTotalPriceProduct] = useState(0);
     const [bookBuy, setBookBuy] = useState([]);
     const [quantity, setQuantity] = useState(0);
-    const handleBuyNow = (isCheckouts,book, totalPriceProducts, quantity) => {
-        setIsCheckout(isCheckouts);
-        setTotalPriceProduct(totalPriceProducts);
-        setQuantity(quantity);
-        setBookBuy(book);
+    const handleBuyNow = (book, totalPriceProducts, quantity) => {
+        navigate("/checkout", {
+            state: {
+                book,
+                totalPriceProducts,
+                quantity,
+            },
+        });
+        
     };
 
     return (
@@ -64,6 +73,7 @@ const BookDetail = (props) => {
                                     totalCart={props.totalCart}
                                     cartList={props.cartList}
                                     handleBuyNow={handleBuyNow}
+                                    handleGetQuantity={handleGetQuantity}
                                 ></DetailPrice>
                             )}
                         </div>

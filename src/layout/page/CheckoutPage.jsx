@@ -6,22 +6,26 @@ import {
     RadioGroup,
     TextField,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import CartItem from "./componets/CartItem";
-import CheckoutItem from "./componets/CheckoutItem";
-import { useNavigate } from "react-router-dom";
-import { CartContext } from "../util/CartItemContext";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-const CheckoutPage = (props) => {
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CartContext } from "../util/CartItemContext";
+import CheckoutItem from "./componets/CheckoutItem";
+import { sendOrderApi } from "../api/bookAPI";
+const CheckoutPage = () => {
+    const location = useLocation();
+    const { book, totalPriceProduct, quantity } = location.state || {};
+    const { cartItems, getTotalPrice, getQuantity } = useContext(CartContext);
     const { clearCart } = useContext(CartContext);
     const [fullName, setFullName] = useState("");
+    const [isPayment, setIsPayment] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [deliveryAddress, setDeliveryAddress] = useState("");
     const [note, setNote] = useState("");
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const [currency, setCurrency] = useState(options.currency);
-
+    const bookArray = Array.isArray(book) ? book : [book];
+    const itemsToDisplay = book ? bookArray : cartItems;
     const onCurrencyChange = ({ target: { value } }) => {
         setCurrency(value);
         dispatch({
@@ -47,29 +51,17 @@ const CheckoutPage = (props) => {
         return actions.order.capture().then((details) => {
             const name = details.payer.name.given_name;
             alert(`Transaction completed by ${name}`);
-            navigate("/checkout-success");
+            setIsPayment(true);
         });
     };
     const totalOrder = () => {
         let totalPrice = 0;
-        props.bookBuy.forEach((item) => {
-            const currentQuantity = item.quantity
-                ? item.quantity
-                : props.quantity;
+        itemsToDisplay.forEach((item) => {
+            const currentQuantity = item.quantity ? item.quantity : quantity;
             totalPrice += item.list_price * currentQuantity;
         });
         return totalPrice;
     };
-
-    useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem("user")) || {};
-        if (userData) {
-            setFullName(userData.fullName || "duc bao");
-            setPhoneNumber(userData.phoneNumber || "0365598888");
-            setDeliveryAddress(userData.deliveryAddress || "Hoàng mai");
-            setNote(userData.note || "giao hàng nhanh   ");
-        }
-    }, []);
 
     useEffect(() => {
         const userData = {
@@ -84,6 +76,22 @@ const CheckoutPage = (props) => {
     const handleConfirmOrder = () => {
         const isConfirmed = window.confirm("Bạn đã chắc chắn đặt hàng?");
         if (isConfirmed) {
+            try {
+                sendOrderApi(
+                    fullName,
+                    phoneNumber,
+                    deliveryAddress,
+                    note,
+                    itemsToDisplay,
+                    totalOrder()
+                );
+            } catch (error) {
+                console.log(error);
+                alert("Đã xảy ra lỗi khi đặt hàng. Vui lòng thử lại sau.");
+            }
+            if(!book && cartItems.length > 0){
+                clearCart();
+            }
             navigate("/checkout-success");
         }
     };
@@ -142,10 +150,10 @@ const CheckoutPage = (props) => {
                         <div className="col-2">Số tiền</div>
                     </div>
                     <div className="row d-flex align-items-center">
-                        {props.bookBuy.map((item, key) => {
+                        {itemsToDisplay.map((item, key) => {
                             const currentQuantity = item.quantity
                                 ? item.quantity
-                                : props.quantity;
+                                : quantity;
                             return (
                                 <CheckoutItem
                                     book={item}
@@ -167,50 +175,53 @@ const CheckoutPage = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="text-center">
-                <strong className="fs-6 text-center">
-                    PHƯƠNG THỨC THANH TOÁN
-                </strong>
-                <hr />
-                <FormControl>
-                    <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                    >
-                        <FormControlLabel
-                            value="female"
-                            control={<Radio />}
-                            label={
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <img
-                                        src="https://cdn0.fahasa.com/skin/frontend/base/default/images/payment_icon/ico_cashondelivery.svg?q=10311"
-                                        alt="Cash on Delivery"
+            {!isPayment && (
+                <div className="text-center">
+                    <strong className="fs-6 text-center">
+                        PHƯƠNG THỨC THANH TOÁN
+                    </strong>
+                    <hr />
+                    <FormControl>
+                        <RadioGroup
+                            aria-labelledby="demo-controlled-radio-buttons-group"
+                            name="controlled-radio-buttons-group"
+                        >
+                            <FormControlLabel
+                                value="female"
+                                control={<Radio />}
+                                label={
+                                    <div
                                         style={{
-                                            width: "40px",
-                                            marginRight: "10px",
+                                            display: "flex",
+                                            alignItems: "center",
                                         }}
-                                    />
-                                    Thanh toán tiền mặt khi nhận hàng (COD)
-                                </div>
+                                    >
+                                        <img
+                                            src="https://cdn0.fahasa.com/skin/frontend/base/default/images/payment_icon/ico_cashondelivery.svg?q=10311"
+                                            alt="Cash on Delivery"
+                                            style={{
+                                                width: "40px",
+                                                marginRight: "10px",
+                                            }}
+                                        />
+                                        Thanh toán tiền mặt khi nhận hàng (COD)
+                                    </div>
+                                }
+                            />
+                        </RadioGroup>
+                        <PayPalButtons
+                            style={{ layout: "vertical" }}
+                            createOrder={(data, actions) =>
+                                onCreateOrder(data, actions)
+                            }
+                            onApprove={(data, actions) =>
+                                onApproveOrder(data, actions)
                             }
                         />
-                    </RadioGroup>
-                    <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        createOrder={(data, actions) =>
-                            onCreateOrder(data, actions)
-                        }
-                        onApprove={(data, actions) =>
-                            onApproveOrder(data, actions)
-                        }
-                    />
-                </FormControl>
-            </div>
+                    </FormControl>
+                </div>
+            )}
+
             <div className="text-center mt-5">
                 <Button
                     variant="outlined"

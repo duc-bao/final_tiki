@@ -49,9 +49,9 @@
                 })
             );
         }, [ star]);
-        useEffect(() =>{
-            console.log(star);
-        }, [star])
+        // useEffect(() =>{
+        //     console.log(star);
+        // }, [star])
         return (
             <div className="container">
             <div className="row">

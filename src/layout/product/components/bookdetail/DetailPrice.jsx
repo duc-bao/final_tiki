@@ -17,7 +17,7 @@ const DetailPrice = (props) => {
     const handleBuyNow = (book) => {
         setIsCheckout(true);
         const totalPrice = book.list_price * quantity;
-        props.handleBuyNow(true, book, totalPrice, quantity);
+        props.handleBuyNow( book, totalPrice, quantity);
     };
     return (
         <div>

@@ -32,7 +32,7 @@ const CartItem = (props) => {
                         <div className="mt-auto">
                             <span className="discounted-price text-danger">
                                 <strong style={{ fontSize: "22px" }}>
-                                    {props.cartItem.list_price?.toLocaleString()}
+                                    {props.cartItem.list_price.toLocaleString()}
                                     đ
                                 </strong>
                             </span>
@@ -41,7 +41,7 @@ const CartItem = (props) => {
                                 style={{ color: "#000" }}   
                             >
                                 <del>
-                                    {props.cartItem.original_price?.toLocaleString()}
+                                    {props.cartItem.original_price.toLocaleString()}
                                     đ
                                 </del>
                             </span>

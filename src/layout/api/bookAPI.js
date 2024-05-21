@@ -19,3 +19,29 @@ export async function getBookId(id) {
         console.log(error);
     }
 }
+
+export async function sendOrderApi(fullname, phoneNumber, deliveryAddress, note,items, totalMoney){
+    try{
+        const response = await axios.post('http://localhost:3000/order',{
+            fullname,
+            phoneNumber, 
+            deliveryAddress,
+            note,
+            items,
+            totalMoney
+        })
+        console.log('Đã gửi đơn hàng thành công!');
+
+    }catch(error){
+        console.log(error);
+    }
+}
+export async function getOrder(){
+    try{
+        const response = await axios.get("http://localhost:3000/order");
+        const data = response.data;
+        return data;
+    }catch(error){
+        console.log(error);
+    }
+}

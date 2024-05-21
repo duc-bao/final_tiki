@@ -1,0 +1,11 @@
+[33m24ce243[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33m6e8f296[m HEAD@{1}: commit: build order and revision payment
+[33m24ce243[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{2}: commit: build function checkout with method payment Paypal
+[33md03bb7f[m HEAD@{3}: commit: build function filter seller and star
+[33m03d03b7[m HEAD@{4}: commit: build function checkout
+[33md26be5a[m HEAD@{5}: commit: build function search and a part filter categories
+[33m499bf35[m HEAD@{6}: commit: build function cart
+[33m01fe1dc[m HEAD@{7}: commit: build book detail and bookList
+[33m236286f[m HEAD@{8}: commit: build header and footer and sidebar
+[33ma04958e[m HEAD@{9}: Branch: renamed refs/heads/master to refs/heads/main
+[33ma04958e[m HEAD@{11}: commit (initial): first commit
